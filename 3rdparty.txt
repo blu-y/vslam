@@ -17,9 +17,9 @@ cd vcpkg
 ./vcpkg integrate install
 ```
 
-# installing eigen sophus opencv ceres g2o gtest
+# installing eigen sophus opencv ceres g2o gtest boost
 ```
-./vcpkg install eigen3 sophus opencv4 ceres g2o
+./vcpkg install eigen3 sophus opencv4 ceres g2o gtest boost
 ./vcpkg list
 ```
 
@@ -41,3 +41,7 @@ cd DBoW3
 cmake -B build -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_TOOLCHAIN_FILE=/Users/blu/3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=arm64-osx
 cmake --build build
 sudo cmake --install build
+
+# installing boost
+brew install autoconf automake autoconf-archive libtool
+./vcpkg install boost
