@@ -1,0 +1,43 @@
+# installing pangolin
+```
+git clone --recursive https://github.com/stevenlovegrove/Pangolin.git
+cd Pangolin
+./scripts/install_prerequisites.sh recommended
+cmake -B build -DCMAKE_INSTALL_PREFIX=/opt/homebrew -DCMAKE_PREFIX_PATH=/opt/homebrew
+cmake --build build
+sudo cmake --install build
+```
+
+# installing vcpkg
+```
+brew install pkg-config
+git clone https://github.com/Microsoft/vcpkg.git
+cd vcpkg
+./bootstrap-vcpkg.sh
+./vcpkg integrate install
+```
+
+# installing eigen sophus opencv ceres g2o gtest
+```
+./vcpkg install eigen3 sophus opencv4 ceres g2o
+./vcpkg list
+```
+
+# setting vcpkg toolchain
+CLion:
+Preferences → Build, Execution, Deployment → CMake → Current Profile
+Add these lines to CMake options
+```
+-DCMAKE_TOOLCHAIN_FILE=/Users/blu/3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake
+-DVCPKG_TARGET_TRIPLET=arm64-osx
+-DCMAKE_VERBOSE_MAKEFILE=ON
+--log-level=VERBOSE
+```
+Tools → CMake → Reset Cache and Reload Project
+
+# installing DBoW3
+git clone https://github.com/rmsalinas/DBoW3.git
+cd DBoW3
+cmake -B build -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_TOOLCHAIN_FILE=/Users/blu/3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=arm64-osx
+cmake --build build
+sudo cmake --install build

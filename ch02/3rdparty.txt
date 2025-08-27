@@ -1,7 +1,0 @@
-brew install eigen
-git clone --recursive https://github.com/stevenlovegrove/Pangolin.git
-cd Pangolin
-./scripts/install_prerequisites.sh recommended
-cmake -B build -DCMAKE_INSTALL_PREFIX=/opt/homebrew -DCMAKE_PREFIX_PATH=/opt/homebrew
-cmake --build build
-sudo cmake --install build
