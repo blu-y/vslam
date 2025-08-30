@@ -352,7 +352,7 @@ void ComputeORB(const Mat &img, vector<KeyPoint> &keypoints, vector<DescType> &d
         for (int i = 0; i < 8; i++) {
             uint32_t d = 0;
             for (int k = 0; k < 32; k++) {
-                int idx_pq = i * 32 + k; // TODO
+                int idx_pq = i * 32 + k;
                 Point2f p(ORB_pattern[idx_pq * 4], ORB_pattern[idx_pq * 4 + 1]);
                 Point2f q(ORB_pattern[idx_pq * 4 + 2], ORB_pattern[idx_pq * 4 + 3]);
 
