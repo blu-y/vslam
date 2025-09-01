@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
     Mat img2 = imread("../2.png", IMREAD_COLOR);
     Mat depth1 = imread("../1_depth.png", IMREAD_UNCHANGED);
 
-    assert(img1.data && img2.data && "Cannot load  images!");
+    assert(img1.data && img2.data && "Cannot load images!");
 
     vector<KeyPoint> keypoints1, keypoints2;
     vector<DMatch> matches;
