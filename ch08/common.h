@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include <string>
-
 /// Read BAL dataset from file
 class BALProblem {
 public:
@@ -58,7 +56,7 @@ public:
     /// The starting address of camera parameters
     double *mutable_cameras() { return parameters_; }
 
-    double *mutable_points() { return parameters_+ + camera_block_size() * num_cameras_; }
+    double *mutable_points() { return parameters_ + camera_block_size() * num_cameras_; }
 
     double *mutable_camera_for_observation(int i) {
         return mutable_cameras() + camera_index_[i] * camera_block_size();

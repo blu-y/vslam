@@ -49,7 +49,7 @@ BALProblem::BALProblem(const std::string &filename, bool use_quaternions) {
 
     std::cout << "Header: " << num_cameras_
               << " " << num_points_
-              << " " << num_observations_;
+              << " " << num_observations_ << std::endl;
 
     point_index_ = new int[num_observations_];
     camera_index_ = new int[num_observations_];
@@ -66,8 +66,7 @@ BALProblem::BALProblem(const std::string &filename, bool use_quaternions) {
         }
     }
 
-    /// TODO: 오류 생기는 곳
-    for (int i = 0; i < num_observations_; ++i) {
+    for (int i = 0; i < num_parameters_; ++i) {
         FscanfOrDie(fptr, "%lf", parameters_ + i);
     }
 
@@ -241,7 +240,7 @@ void BALProblem::Normalize() {
         point = scale * (point - median);
     }
 
-    double *cameras = mutable_points();
+    double *cameras = mutable_cameras();
     double angle_axis[3];
     double center[3];
     for (int i = 0; i < num_cameras_; ++i) {
@@ -268,7 +267,7 @@ void BALProblem::Perturb(const double rotation_sigma,
     }
 
     for (int i = 0; i < num_cameras_; ++i) {
-        double *camera = mutable_points() + camera_block_size() * i;
+        double *camera = mutable_cameras() + camera_block_size() * i;
 
         double angle_axis[3];
         double center[3];
@@ -277,7 +276,7 @@ void BALProblem::Perturb(const double rotation_sigma,
         if (rotation_sigma > 0.0) {
             PerturbPoint3(rotation_sigma, angle_axis);
         }
-        AngleAxisRotatePoint(angle_axis, center, camera);
+        AngleAxisAndCenterToCamera(angle_axis, center, camera);
 
         if (translation_sigma > 0.0)
             PerturbPoint3(translation_sigma, camera + camera_block_size() - 6);

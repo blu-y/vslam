@@ -2,8 +2,8 @@
 // Created by Blu on 25. 9. 2..
 //
 
-#ifndef BUNDLEADJUSTMENT_ROTATION_H
-#define BUNDLEADJUSTMENT_ROTATION_H
+#ifndef ROTATION_H
+#define ROTATION_H
 
 #include <cmath>
 #include <limits>
@@ -123,10 +123,39 @@ inline void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[
         T w_cross_pt[3];
         CrossProduct(w, pt, w_cross_pt);
 
+        const T tmp = DotProduct(w, pt) * (T(1.0) - costheta);
+        //  (w[0] * pt[0] + w[1] * pt[1] + w[2] * pt[2]) * (T(1.0) - costheta);
+
+        result[0] = pt[0] * costheta + w_cross_pt[0] * sintheta + w[0] * tmp;
+        result[1] = pt[1] * costheta + w_cross_pt[1] * sintheta + w[1] * tmp;
+        result[2] = pt[2] * costheta + w_cross_pt[2] * sintheta + w[2] * tmp;
+    } else {
+        // Near zero, the first order Taylor approximation of the rotation
+        // matrix R corresponding to a vector w and angle w is
+        //
+        //      R = I + hat(w) * sin(theta)
+        //
+        // But sintheta ~ theta and theta * w = angle_axis, which gives us
+        //
+        //      R = I + hat(w)
+        //
+        // and actually performing multiplication with the point pt, gives us
+        // R * pt = pt + w x pt.
+        //
+        // Switching to the Taylor expansion near zero provides meaningful
+        // derivatives when evaluated using Jets.
+        //
+        // Explicitly inlined evaluation of the cross product for performance reasons.
+        // const T w_cross_pt[3] = {angle_axis[1] * pt[2] - angle_axis[2] * pt[1],
+        //                          angle_axis[2] * pt[0] - angle_axis[0] * pt[2],
+        //                          angle_axis[0] * pt[1] - angle_axis[1] * pt[0]};
+        T w_cross_pt[3];
+        CrossProduct(angle_axis, pt, w_cross_pt);
+
         result[0] = pt[0] + w_cross_pt[0];
         result[1] = pt[1] + w_cross_pt[1];
         result[2] = pt[2] + w_cross_pt[2];
     }
 }
 
-#endif //BUNDLEADJUSTMENT_ROTATION_H
+#endif //ROTATION_H

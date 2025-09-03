@@ -21,9 +21,9 @@ int main(int argc, char **argv) {
     BALProblem bal_problem("../problem-16-22106-pre.txt");
     bal_problem.Normalize();
     bal_problem.Perturb(0.1, 0.5, 0.5);
-    bal_problem.WriteToPLYFile("initial.ply");
+    bal_problem.WriteToPLYFile("initial_ceres.ply");
     SolveBA(bal_problem);
-    bal_problem.WriteToPLYFile("final.ply");
+    bal_problem.WriteToPLYFile("final_ceres.ply");
 
     return 0;
 }
@@ -57,6 +57,12 @@ void SolveBA(BALProblem &bal_problem) {
 
         problem.AddResidualBlock(cost_function, loss_function, camera, point);
     }
+
+    // show some information here...
+    cout << "bal problem file loaded..." << endl;
+    cout << "bal problem have " << bal_problem.num_cameras() << " cameras and "
+         << bal_problem.num_points() << " points" << endl;
+    cout << "Forming " << bal_problem.num_observations() << " observations" << endl;
 
     cout << "Solving ceres BA ... " << endl;
     ceres::Solver::Options options;

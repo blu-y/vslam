@@ -2,8 +2,8 @@
 // Created by Blu on 25. 9. 2..
 //
 
-#ifndef BUNDLEADJUSTMENT_RANDOM_H
-#define BUNDLEADJUSTMENT_RANDOM_H
+#ifndef RANDOM_H
+#define RANDOM_H
 
 #include <math.h>
 #include <stdlib.h>
@@ -25,4 +25,4 @@ inline double RandNormal() {
     return x1 * w;
 }
 
-#endif //BUNDLEADJUSTMENT_RANDOM_H
+#endif //RANDOM_H

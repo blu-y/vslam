@@ -2,8 +2,8 @@
 // Created by Blu on 25. 9. 2..
 //
 
-#ifndef BUNDLEADJUSTMENT_SNAVELYREPROJECTIONERROR_H
-#define BUNDLEADJUSTMENT_SNAVELYREPROJECTIONERROR_H
+#ifndef SNAVELYREPROJECTIONERROR_H
+#define SNAVELYREPROJECTIONERROR_H
 
 #include <ceres/ceres.h>
 #include "rotation.h"
@@ -35,8 +35,8 @@ public:
     // point : 3D location
     // predictions : 2D predictions with center of the image plane
     template <typename T>
-    static inline bool CamProjectionWithDistortion(const T *const camera,
-                                                   const T *const point,
+    static inline bool CamProjectionWithDistortion(const T *camera,
+                                                   const T *point,
                                                    T *predictions) {
         // Rodrigues' formula
         T p[3];
@@ -67,11 +67,12 @@ public:
     static ceres::CostFunction *Create(const double observed_x,
                                        const double observed_y) {
         return (new ceres::AutoDiffCostFunction<SnavelyReprojectionError, 2, 9, 3>(
-                    new SnavelyReprojectionError(observed_x, observed_y)));
+            new SnavelyReprojectionError(observed_x, observed_y)));
     }
 
 private:
-    double observed_x, observed_y;
+    double observed_x;
+    double observed_y;
 };
 
-#endif //BUNDLEADJUSTMENT_SNAVELYREPROJECTIONERROR_H
+#endif // SNAVELYREPROJECTIONERROR_H
