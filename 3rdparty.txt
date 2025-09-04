@@ -45,3 +45,38 @@ sudo cmake --install build
 # installing boost
 brew install autoconf automake autoconf-archive libtool
 ./vcpkg install boost
+
+# install g2o viewer
+brew install freeglut glew qt5
+./vcpkg install suitesparse
+./vcpkg install libqglviewer --triplet=arm64-osx-qt5
+```
+#cd /Users/blu/3rdparty/vcpkg/triplets/community/
+#cp ../arm64-osx.cmake ./arm64-osx-qt5.cmake
+set(VCPKG_TARGET_ARCHITECTURE arm64)
+set(VCPKG_CRT_LINKAGE dynamic)
+set(VCPKG_LIBRARY_LINKAGE dynamic)
+set(VCPKG_OSX_ARCHITECTURES arm64)
+# Qt5 사용 강제
+set(VCPKG_POLICY_PREFER_PACKAGE_CONFIG OFF)
+set(VCPKG_FEATURE_FLAGS "versions")
+# Qt5 강제 설정
+set(VCPKG_DEFAULT_VTK_VERSION "qt5")
+```
+cd ~/3rdparty
+git clone https://github.com/RainerKuemmerle/g2o.git
+cd g2o
+mkdir build && cd build
+cmake .. \
+  -DG2O_BUILD_APPS=ON \
+  -DG2O_BUILD_EXAMPLES=OFF \
+  -DG2O_USE_OPENGL=ON \
+  -DVCPKG_TARGET_TRIPLET=arm64-osx \
+  -DCMAKE_TOOLCHAIN_FILE=/Users/blu/3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake \
+  -DQt5_DIR=$(brew --prefix qt@5)/lib/cmake/Qt5 \
+  -DQGLVIEWER_INCLUDE_DIR=/Users/blu/3rdparty/vcpkg/installed/arm64-osx/include/QGLViewer \
+  -DQGLVIEWER_LIBRARY=/Users/blu/3rdparty/vcpkg/installed/arm64-osx/lib/libQGLViewer.a \
+  -DCSPARSE_LIBRARY=/Users/blu/3rdparty/vcpkg/installed/arm64-osx/lib/libcxsparse.a \
+  -DCMAKE_EXE_LINKER_FLAGS="-Wl,-force_load,/Users/blu/3rdparty/vcpkg/installed/arm64-osx/lib/libsuitesparseconfig.a"
+make -j$(sysctl -n hw.logicalcpu)
+make install
