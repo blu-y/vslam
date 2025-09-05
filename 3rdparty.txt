@@ -36,9 +36,9 @@ Add these lines to CMake options
 Tools → CMake → Reset Cache and Reload Project
 
 # installing DBoW3
-git clone https://github.com/rmsalinas/DBoW3.git
+git clone https://github.com/blu-y/DBow3.git
 cd DBoW3
-cmake -B build -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_TOOLCHAIN_FILE=/Users/blu/3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=arm64-osx
+cmake -B build -DCMAKE_TOOLCHAIN_FILE=/Users/blu/3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=arm64-osx
 cmake --build build
 sudo cmake --install build
 
