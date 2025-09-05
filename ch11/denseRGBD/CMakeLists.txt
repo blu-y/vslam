@@ -23,6 +23,5 @@ target_link_libraries(surfelMapping PRIVATE
 add_executable(octomapMapping octomapMapping.cpp)
 target_link_libraries(octomapMapping PRIVATE
         ${OpenCV_LIBS}
-        ${OCTOMAP_LIBRARIES}
-        Sophus::Sophus
+        octomap
         Eigen3::Eigen)
