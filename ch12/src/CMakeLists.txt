@@ -1,14 +1,15 @@
 add_library(mySLAM SHARED
-        frame.cpp
-        mappoint.cpp
-        map.cpp
         camera.cpp
-#        config.cpp
+        config.cpp
+        dataset.cpp
+        frame.cpp
         feature.cpp
-#        frontend.cpp
-#        viewer.cpp
-#        visual_odometry.cpp
-#        dataset.cpp
+        map.cpp
+        mappoint.cpp
+        frontend.cpp
+        backend.cpp
+        viewer.cpp
+        visual_odometry.cpp
 )
 
 target_link_libraries(mySLAM ${THIRD_PARTY_LIBS})
